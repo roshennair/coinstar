@@ -1,4 +1,4 @@
-# React CryptoCurrency Tracker
+# Coinstar - React CryptoCurrency Tracker
 
 A cryptocurrency tracker/dashboard built using React, Chart.js, and the [CoinGecko API](https://www.coingecko.com/en/api).
 
