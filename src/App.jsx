@@ -7,16 +7,17 @@ import Header from './components/Header';
 import './App.css';
 
 const App = () => {
-    return (
-        <div className="container">
-            <WatchListContextProvider>
-                <Router>
-                    <Header />
-                    <Route exact path="/" component={CoinSummaryPage}></Route>
-                </Router>
-            </WatchListContextProvider>
-        </div>
-    );
+	return (
+		<div className="container">
+			<WatchListContextProvider>
+				<Router>
+					<Header />
+					<Route exact path="/" component={CoinSummaryPage}></Route>
+					<Route path="/coins/:id" component={CoinDetailPage}></Route>
+				</Router>
+			</WatchListContextProvider>
+		</div>
+	);
 }
 
 export default App;

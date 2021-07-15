@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Coin = ({ coin, deleteCoin }) => {
 	return (
-		<Link to="/coindetail" className="text-decoration-none my-1 coin">
+		<Link to={`/coins/${coin.id}`} className="text-decoration-none my-1 coin">
 			<li className="coinlist-item list-group-item list-group-item-action d-flex justify-content-between align-items-center text-dark">
 				<img className="coinlist-image" src={coin.image} alt={coin.id} />
 				<span className="text-decoration-none">RM{coin.current_price}</span>
