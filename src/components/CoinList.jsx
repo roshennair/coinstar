@@ -9,7 +9,7 @@ const CoinList = () => {
 	const { watchList, deleteCoin } = useContext(WatchListContext);
 
 	useEffect(() => {
-		const fetchCoinData = async () => {
+		const fetchCoinsData = async () => {
 			setIsLoading(true); // Trigger loading
 			const params = new URLSearchParams({
 				vs_currency: 'myr',
@@ -23,8 +23,8 @@ const CoinList = () => {
 			setIsLoading(false);
 		}
 
-		// Only fetch coin data if watchlist is not empty
-		watchList.length > 0 ? fetchCoinData() : setCoins([]);
+		// Only fetch coins data if watchlist is not empty
+		watchList.length > 0 ? fetchCoinsData() : setCoins([]);
 	}, [watchList]);
 
 	const renderCoins = () => {
