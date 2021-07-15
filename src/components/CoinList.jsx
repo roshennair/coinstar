@@ -4,44 +4,46 @@ import { WatchListContext } from '../context/watchListContext';
 import Coin from './Coin';
 
 const CoinList = () => {
-    const [coins, setCoins] = useState([]);
-    const { watchList } = useContext(WatchListContext);
-    const [isLoading, setIsLoading] = useState(false);
-    useEffect(() => {
-        const fetchCoinData = async () => {
-            setIsLoading(true); // Trigger loading
-            const params = new URLSearchParams({
-                vs_currency: 'myr',
-                ids: watchList.join(','),
-                order: 'market_cap_desc'
-            });
+	const [coins, setCoins] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const { watchList, deleteCoin } = useContext(WatchListContext);
 
-            const response = await fetch(`${coinGecko.baseURL}/coins/markets?${params}`);
-            const coinData = await response.json()
-            setCoins(coinData)
-            setIsLoading(false);
-        }
+	useEffect(() => {
+		const fetchCoinData = async () => {
+			setIsLoading(true); // Trigger loading
+			const params = new URLSearchParams({
+				vs_currency: 'myr',
+				ids: watchList.join(','),
+				order: 'market_cap_desc'
+			});
 
-        fetchCoinData();
-    }, []);
+			const response = await fetch(`${coinGecko.baseURL}/coins/markets?${params}`);
+			const coinData = await response.json()
+			setCoins(coinData)
+			setIsLoading(false);
+		}
 
-    const renderCoins = () => {
-        if (isLoading) {
-            return (<div>Loading...</div>);
-        }
+		// Only fetch coin data if watchlist is not empty
+		watchList.length > 0 ? fetchCoinData() : setCoins([]);
+	}, [watchList]);
 
-        return (
-            <ul className="coinlist list-group mt-2">
-                {coins.map(coin => <Coin key={coin.id} coin={coin} />)}
-            </ul>
-        )
-    }
+	const renderCoins = () => {
+		if (isLoading) {
+			return (<div>Loading...</div>);
+		}
 
-    return (
-        <div>
-            {renderCoins()}
-        </div>
-    )
+		return (
+			<ul className="coinlist list-group mt-2">
+				{coins.map(coin => <Coin key={coin.id} coin={coin} deleteCoin={deleteCoin} />)}
+			</ul>
+		)
+	}
+
+	return (
+		<div>
+			{renderCoins()}
+		</div>
+	)
 }
 
-export default CoinList
+export default CoinList;
