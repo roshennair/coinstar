@@ -6,11 +6,18 @@ import CoinData from '../components/CoinData';
 
 const CoinDetailPage = () => {
 	const { id } = useParams();
-
 	const [coinData, setCoinData] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
+	const formatData = data => data.map(el => {
+		return {
+			x: el[0],
+			y: +(el[1]).toFixed(2)
+		}
+	});
+
 	useEffect(() => {
+
 		const fetchData = async () => {
 			setIsLoading(true); // Trigger loading
 
@@ -44,9 +51,9 @@ const CoinDetailPage = () => {
 			const detailData = await response[3].json();
 
 			setCoinData({
-				day: dayData.prices,
-				week: weekData.prices,
-				year: yearData.prices,
+				day: formatData(dayData.prices),
+				week: formatData(weekData.prices),
+				year: formatData(yearData.prices),
 				detail: detailData[0]
 			});
 			setIsLoading(false);
@@ -62,7 +69,7 @@ const CoinDetailPage = () => {
 
 		return (
 			<div className="coinlist">
-				<HistoryChart />
+				<HistoryChart data={coinData} />
 				<CoinData />
 			</div>
 		);
