@@ -9,6 +9,10 @@ body {
     background-color: #0d1321;
 }
 
+a#header-link:focus {
+	outline: none;
+}
+
 ul {
     list-style: none;
 }
